@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+  labels:
+    name: backend-app
+    tier: backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: backend-app
+  template:
+    metadata:
+      labels:
+        app: backend-app
+        tier: backend
+    spec:
+      containers:
+      - name: backend-app-container
+        image: backendappimage
+        ports:
+          - containerPort: 80

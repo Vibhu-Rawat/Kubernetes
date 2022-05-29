@@ -1,0 +1,16 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: usermgmt-restapp-service
+  namespace: dev1
+  labels:
+    app: usermgmt-restapp
+spec:
+  selector:
+    app: usermgmt-restapp
+  type:  NodePort
+  ports:
+  - name:  hhtp
+    port:  80
+    targetPort:  80
+    #nodePort: 31234
