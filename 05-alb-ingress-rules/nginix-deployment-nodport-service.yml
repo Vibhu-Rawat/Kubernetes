@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app1-nginx-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app1-nginx
+  template:
+    metadata:
+      labels:
+        app: app1-nginx
+    spec:
+      containers:
+      - name: app1-nginx
+        image: kube-nginxapp1:1.0.0
+        ports:
+          - containerPort: 80
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: app1-nginx-nodeport-service
+  labels:
+    app: app1-nginx  
+spec:
+  selector:
+    app: app1-nginx
+  type: NodePort
+  ports:
+  - name: http
+    port:  80
+    targetPort:  80
+
