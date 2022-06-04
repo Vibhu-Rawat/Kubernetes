@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app3-nginx-deployment
+  labels:
+    app: app3-nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app3-nginx
+  template:
+    metadata:
+      labels:
+        app: app3-nginx
+    spec:
+      containers:
+      - name: app3-nginx
+        image: kube-nginxapp1:3.0.0
+        ports:
+          - containerPort: 80
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: app3-nginx-clusterip-service
+  labels:
+    app: app3-nginx
+  annotations:
+    alb.ingress.kubernetes.io/healthcheck-path: /index.html  
+spec:
+  selector:
+    app: app3-nginx
+  type: ClusterIP
+  ports:
+  - protocol: TCP
+    port:  80
+    targetPort:  80
