@@ -18,6 +18,9 @@ metadata:
     alb.ingress.kubernetes.io/unhealthy-threshold-count: '2'
 spec:
   ingressClassName: aws-ingress-class
+  tls: 
+    - hosts: 
+      - "*.vibhurawat.com"
   rules:
   - http:
       paths:
