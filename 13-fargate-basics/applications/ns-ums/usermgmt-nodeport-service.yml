@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: usermgmt-restapp-nodeport-service
+  labels:
+    app: usermgmt-restapp
+    runon: fargate
+spec:
+  selector:
+    app: usermgmt-restapp
+  type: NodePort
+  ports:
+  - port:  8095
+    targetPort:  8095
