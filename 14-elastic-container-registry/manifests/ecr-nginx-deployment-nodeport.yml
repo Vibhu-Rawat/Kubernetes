@@ -1,0 +1,45 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: ecr-nginx-app-deployment
+  labels:
+    name: ecr-nginx-app
+spec:
+  replicas: 1
+  selectors:
+    matchLabels:
+      app: ecr-nginx-app
+  template:
+    metadata:
+      labels:
+        name: ecr-nginx-app
+    spec:
+      containers:
+      - image: 315889732757.dkr.ecr.ap-south-1.amazonaws.com/aws-ecr-kubenginx:1.0.0
+        name: ecr-nginx-app
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "128M"
+          limits:
+            cpu: "1000m"
+            memory: "512M"        
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ecr-nginx-app-nodeport-service
+  labels:
+    app: ecr-nginx-app
+  annotations:
+    lb.ingress.kubernetes.io/healthcheck-path: /index.html  
+spec:
+  selector:
+    app: ecr-nginx-app
+  type: NodePort
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
