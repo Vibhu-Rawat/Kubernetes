@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: notification-clusterip-service
+  labels:
+    app: notification-restapp
+spec:
+  selector:
+    app: notification-restapp
+  type: ClusterIP
+  ports:
+  - port: 8096
+    targetPort: 8096

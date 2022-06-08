@@ -1,0 +1,7 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: smtp-service
+spec:
+  type: ExternalName
+  externalName: email-smtp.ap-south-1.amazonaws.com
