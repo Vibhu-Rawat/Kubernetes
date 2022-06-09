@@ -1,0 +1,39 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: vpa-nginx-app-deployment
+  labels:
+    app: vpa-nginx-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: vpa-nginx-app
+  template:
+    metadata:
+      labels:
+        app: vpa-nginx-app
+    spec:
+      containers:
+      - image: kubenginx:1.0.0
+        name: vpa-nginx-app
+        resources:
+          requests:
+            cpu: "20m"
+            memory: "55M" 
+        ports:
+        - containerPort: 80
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: vpa-nginx-app-service
+  labels:
+    app: vpa-nginx-app
+spec:
+  selector:
+    app: vpa-nginx-app
+  type: NodePort
+  ports:
+  - port:  80
+    targetPort:  80       
